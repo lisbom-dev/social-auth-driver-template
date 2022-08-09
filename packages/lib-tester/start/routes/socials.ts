@@ -1,7 +1,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 import User from 'App/Models/User'
 
-Route.get('/:provider/redirect', async ({ auth, ally, params, response }) => {
+Route.get('/auth/:provider/redirect', async ({ auth, ally, params, response }) => {
   if (await auth.check()) {
     return response.notAcceptable()
   }
@@ -9,7 +9,7 @@ Route.get('/:provider/redirect', async ({ auth, ally, params, response }) => {
   return response.redirect(ally.use(params.provider).stateless().redirectUrl())
 })
 
-Route.get('/:provider/callback', async ({ auth, ally, params, response }) => {
+Route.get('/auth/:provider/callback', async ({ auth, ally, params, response }) => {
   if (await auth.check()) {
     return response.notAcceptable()
   }

@@ -8,8 +8,7 @@ import {
   InstagramDriver,
   InstagramDriverConfig,
 } from '@lisbom-dev-adonis/instagram-driver/standalone'
-
-import { TikTokDriver, TikTokDriverConfig } from '@lisbom-dev-adonis/tiktok-driver/standalone'
+import { TikTokDriverConfig, TikTokDriver } from '@lisbom-dev-adonis/tiktok-driver/standalone'
 
 declare module '@ioc:Adonis/Addons/Ally' {
   interface SocialProviders {

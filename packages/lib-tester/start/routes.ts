@@ -20,6 +20,7 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 import './routes/google'
+import './routes/instagram'
 
 Route.get('/', async () => {
   return { hello: 'world' }

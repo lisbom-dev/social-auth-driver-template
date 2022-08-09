@@ -1,6 +1,6 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
 
-export class TikTokDriverProvider {
+export default class TikTokDriverProvider {
   constructor(protected app: ApplicationContract) {}
 
   public async boot() {

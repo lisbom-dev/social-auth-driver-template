@@ -1,7 +1,7 @@
 {
   "name": "@lisbom-dev-adonis/instagram-driver",
   "version": "1.0.0",
-  "main": "standalone.ts",
+  "main": "build/providers/index.js",
   "license": "MIT",
   "scripts": {
     "clean": "del build",
@@ -41,6 +41,7 @@
     }
   },
   "dependencies": {
+    "copyfiles": "^2.4.1",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^2.1.4"
   }

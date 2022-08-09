@@ -9,13 +9,20 @@ Route.get('/instagram/redirect', async ({ ally, auth, response }) => {
   return response.redirect(await ally.use('instagram').stateless().redirectUrl())
 })
 
-Route.get('/instagram/callback', async ({ ally, auth, response }) => {
+Route.get('/tiktok/redirect', async ({ ally, auth, response }) => {
+  if (await auth.check()) {
+    return response.notAcceptable()
+  }
+
+  return response.redirect(await ally.use('tiktok').stateless().redirectUrl())
+})
+
+Route.get('/auth/instagram/callback', async ({ ally, auth, response }) => {
   if (await auth.check()) {
     return response.notAcceptable()
   }
 
   const instagram = ally.use('instagram').stateless()
-
   if (instagram.accessDenied()) {
     return 'Access Denied'
   }
@@ -24,8 +31,7 @@ Route.get('/instagram/callback', async ({ ally, auth, response }) => {
     return instagram.getError()
   }
 
-  const { token } = await instagram.getAccessToken()
-  const instagramUser = await instagram.userFromToken(token)
+  const instagramUser = await instagram.user()
 
   const user = await User.firstOrCreate({
     email: instagramUser.email!,

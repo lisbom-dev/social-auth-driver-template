@@ -28,6 +28,8 @@ export default Env.rules({
   GOOGLE_CLIENT_SECRET: Env.schema.string(),
   INSTAGRAM_CLIENT_ID: Env.schema.string(),
   INSTAGRAM_CLIENT_SECRET: Env.schema.string(),
+  TIKTOK_DRIVER_CLIENT_ID: Env.schema.string(),
+  TIKTOK_DRIVER_CLIENT_SECRET: Env.schema.string(),
   DRIVE_DISK: Env.schema.enum(['local'] as const),
   NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
 })

@@ -33,13 +33,13 @@ const allyConfig: AllyConfig = {
     driver: 'instagram',
     clientId: Env.get('INSTAGRAM_CLIENT_ID'),
     clientSecret: Env.get('INSTAGRAM_CLIENT_SECRET'),
-    callbackUrl: 'http://localhost:3000/auth/instagram',
+    callbackUrl: 'https://localhost:3333/auth/instagram/callback',
   },
   tiktok: {
     driver: 'tiktok',
-    clientId: Env.get('TIKTOK_CLIENT_ID'),
-    clientSecret: Env.get('TIKTOK_CLIENT_SECRET'),
-    callbackUrl: 'http://localhost:3000/auth/tiktok',
+    clientId: Env.get('TIKTOK_DRIVER_CLIENT_ID'),
+    clientSecret: Env.get('TIKTOK_DRIVER_CLIENT_SECRET'),
+    callbackUrl: 'https://127.0.0.1:3333/auth/tiktok/callback',
   },
 }
 
