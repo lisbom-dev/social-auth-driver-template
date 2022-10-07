@@ -4,11 +4,8 @@
  * Feel free to let us know via PR, if you find something broken in this contract
  * file.
  */
-import {
-  InstagramDriver,
-  InstagramDriverConfig,
-} from '@lisbom-dev-adonis/instagram-driver/standalone'
-import { TikTokDriverConfig, TikTokDriver } from '@lisbom-dev-adonis/tiktok-driver/standalone'
+import { InstagramDriver, InstagramDriverConfig } from 'ally-instagram-driver/standalone'
+import { TikTokDriverConfig, TikTokDriver } from 'ally-tiktok-driver/standalone'
 
 declare module '@ioc:Adonis/Addons/Ally' {
   interface SocialProviders {

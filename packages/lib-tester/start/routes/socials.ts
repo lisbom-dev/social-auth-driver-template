@@ -10,6 +10,7 @@ Route.get('/auth/:provider/redirect', async ({ auth, ally, params, response }) =
 })
 
 Route.get('/auth/:provider/callback', async ({ auth, ally, params, response }) => {
+  console.log('oi')
   if (await auth.check()) {
     return response.notAcceptable()
   }

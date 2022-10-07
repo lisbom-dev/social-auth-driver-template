@@ -20,8 +20,8 @@
       "@adonisjs/lucid",
       "@adonisjs/auth",
       "@adonisjs/ally",
-      "@lisbom-dev-adonis/tiktok-driver",
-      "@lisbom-dev-adonis/instagram-driver"
+      "ally-tiktok-driver",
+      "ally-instagram-driver"
     ]
   }
 }

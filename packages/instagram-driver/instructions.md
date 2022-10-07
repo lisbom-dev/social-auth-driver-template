@@ -6,7 +6,7 @@ Make sure to first define the mapping inside the `contracts/ally.ts` file as fol
 import {
   InstagramDriver,
   InstagramDriverConfig,
-} from '@lisbom-dev-adonis/instagram-driver/build/standalone'
+} from 'ally-instagram-driver/build/standalone'
 
 declare module '@ioc:Adonis/Addons/Ally' {
   interface SocialProviders {

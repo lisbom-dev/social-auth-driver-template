@@ -23,8 +23,8 @@
     "@adonisjs/lucid",
     "@adonisjs/auth",
     "@adonisjs/ally",
-    "@lisbom-dev-adonis/instagram-driver",
-    "@lisbom-dev-adonis/tiktok-driver"
+    "ally-instagram-driver",
+    "ally-tiktok-driver"
   ],
   "metaFiles": [
     "ssl/*"

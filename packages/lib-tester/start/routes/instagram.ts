@@ -8,21 +8,18 @@ Route.get('/instagram/redirect', async ({ ally, auth, response }) => {
 
   return response.redirect(await ally.use('instagram').stateless().redirectUrl())
 })
-
-Route.get('/tiktok/redirect', async ({ ally, auth, response }) => {
-  if (await auth.check()) {
-    return response.notAcceptable()
-  }
-
-  return response.redirect(await ally.use('tiktok').stateless().redirectUrl())
+Route.get('/tiktok/redirect', async ({ ally, response }) => {
+  const url = await ally.use('tiktok').stateless().redirectUrl()
+  console.log(url)
+  return response.redirect(url)
 })
 
-Route.get('/auth/instagram/callback', async ({ ally, auth, response }) => {
+Route.get('/auth/:provider/callback', async ({ ally, params, auth, response }) => {
   if (await auth.check()) {
     return response.notAcceptable()
   }
 
-  const instagram = ally.use('instagram').stateless()
+  const instagram = ally.use(params.provider).stateless()
   if (instagram.accessDenied()) {
     return 'Access Denied'
   }

@@ -13,10 +13,13 @@
 import { ApiRequest, Oauth2Driver } from '@adonisjs/ally/build/standalone'
 import type {
   AllyUserContract,
+  ApiRequestContract,
   LiteralStringUnion,
-  RedirectRequestContract,
+  // eslint-disable-next-line prettier/prettier
+  RedirectRequestContract
 } from '@ioc:Adonis/Addons/Ally'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import axios from 'axios'
 
 /**
  * Define the access token object properties in this type. It
@@ -43,7 +46,27 @@ export interface TikTokUserContract
  * Change "YourDriver" to something more relevant
  * ------------------------------------------------
  */
-export type TikTokDriverScopes = 'user.info.basic' | 'video.list' | 'sound.share.create'
+export type TikTokDriverScopes =
+  | 'user.info.basic'
+  | 'video.list'
+  | 'sound.share.create'
+  | 'user.info.email'
+
+const fields = [
+  'open_id',
+  'union_id',
+  'avatar_url',
+  'avatar_url_100',
+  'avatar_large_url',
+  'display_name',
+  'bio_description',
+  'profile_deep_link',
+  'is_verified',
+  'follower_count',
+  'following_count',
+  'likes_count',
+  'email',
+]
 
 /**
  * Define the configuration options accepted by your driver. It must have the following
@@ -70,6 +93,11 @@ export type TikTokTokenDecoded = {
   display_name: string
   bio_description: string
   profile_deep_link: string
+  is_verified: boolean
+  follower_count: number
+  following_count: number
+  likes_count: number
+  email?: string
 }
 
 /**
@@ -77,11 +105,11 @@ export type TikTokTokenDecoded = {
  *
  */
 export class TikTokDriver extends Oauth2Driver<TikTokDriverAccessToken, TikTokDriverScopes> {
-  protected authorizeUrl = 'https://open-api.tiktok.com/oauth/authorize'
+  protected authorizeUrl = 'https://www.tiktok.com/auth/authorize'
 
-  protected accessTokenUrl = 'https://open-api.tiktok.com/access_token'
+  protected accessTokenUrl = 'https://open-api.tiktok.com/oauth/access_token/'
 
-  protected userInfoUrl = 'https://open-api.tiktok.com/user/info'
+  protected userInfoUrl = 'https://open.tiktokapis.com/v2/user/info/'
 
   protected codeParamName = 'code'
 
@@ -109,22 +137,36 @@ export class TikTokDriver extends Oauth2Driver<TikTokDriverAccessToken, TikTokDr
     request.param('state', csrfState)
   }
 
+  protected processClientResponse(client: ApiRequest, response: any) {
+    super.processClientResponse(client, response)
+    return {
+      access_token: response.data.access_token,
+      token_type: 'bearer',
+      expires_in: response.data.expires_in,
+      refresh_token: response.data.refresh_token,
+      ...response.data,
+    }
+  }
+
+  protected configureAccessTokenRequest(request: ApiRequestContract): void {
+    request.clearField('redirect_uri')
+    request.clearField('client_id')
+    request.field('client_key', this.config.clientId)
+  }
+
   public accessDenied() {
     return this.ctx.request.input('error') === 'user_denied'
   }
 
-  protected getAuthenticatedRequest(token: string) {
-    const request = this.httpClient(this.config.userInfoUrl || this.userInfoUrl)
-
-    request.header('Accept', 'application/json')
-    request.param('access_token', token)
-    request.parseAs('json')
-    return request
-  }
-
   protected async getUserInfo(token: string): Promise<TikTokUserContract> {
-    const request = this.getAuthenticatedRequest(token)
-    const decodedUser = await request.post()
+    const { data: decodedUser } = await axios.get<TikTokTokenDecoded>(this.userInfoUrl, {
+      params: {
+        fields: fields.join(','),
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     return {
       id: (decodedUser as TikTokTokenDecoded).open_id,
       avatarUrl: (decodedUser as TikTokTokenDecoded).avatar_url,

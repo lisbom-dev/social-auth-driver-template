@@ -16,7 +16,7 @@ import type {
   ApiRequestContract,
   LiteralStringUnion,
   Oauth2DriverConfig,
-  RedirectRequestContract,
+  RedirectRequestContract
 } from '@ioc:Adonis/Addons/Ally'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { JwksClient } from 'jwks-rsa'
