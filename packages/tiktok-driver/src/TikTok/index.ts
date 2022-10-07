@@ -165,7 +165,11 @@ export class TikTokDriver extends Oauth2Driver<TikTokDriverAccessToken, TikTokDr
         1
       )
     }
-    const { data: decodedUser } = await axios.get<TikTokTokenDecoded>(this.userInfoUrl, {
+    const {
+      data: {
+        data: { user: decodedUser },
+      },
+    } = await axios.get<{ data: { user: TikTokTokenDecoded } }>(this.userInfoUrl, {
       params: {
         fields: fields.join(','),
       },
