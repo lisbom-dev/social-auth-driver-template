@@ -1,6 +1,6 @@
 {
   "name": "ally-tiktok-driver",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "build/providers/index.js",
   "types": "build/standalone.d.ts",
   "license": "MIT",
