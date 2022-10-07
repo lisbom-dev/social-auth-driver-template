@@ -174,7 +174,8 @@ export class TikTokDriver extends Oauth2Driver<TikTokDriverAccessToken, TikTokDr
       },
     })
     return {
-      id: (decodedUser as TikTokTokenDecoded).open_id,
+      id:
+        (decodedUser as TikTokTokenDecoded).open_id || (decodedUser as TikTokTokenDecoded).union_id,
       avatarUrl: (decodedUser as TikTokTokenDecoded).avatar_url,
       original: decodedUser,
       nickName: (decodedUser as TikTokTokenDecoded).display_name,
