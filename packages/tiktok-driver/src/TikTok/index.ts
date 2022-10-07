@@ -159,6 +159,12 @@ export class TikTokDriver extends Oauth2Driver<TikTokDriverAccessToken, TikTokDr
   }
 
   protected async getUserInfo(token: string): Promise<TikTokUserContract> {
+    if (!this.config.scopes || !this.config.scopes.includes('user.info.email')) {
+      fields.splice(
+        fields.findIndex((field) => field === 'email'),
+        1
+      )
+    }
     const { data: decodedUser } = await axios.get<TikTokTokenDecoded>(this.userInfoUrl, {
       params: {
         fields: fields.join(','),
