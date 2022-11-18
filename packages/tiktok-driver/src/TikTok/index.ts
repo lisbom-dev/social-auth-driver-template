@@ -20,6 +20,7 @@ import type {
 } from '@ioc:Adonis/Addons/Ally'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import axios from 'axios'
+import { URL } from 'url'
 
 /**
  * Define the access token object properties in this type. It
@@ -177,13 +178,21 @@ export class TikTokDriver extends Oauth2Driver<TikTokDriverAccessToken, TikTokDr
         Authorization: `Bearer ${token}`,
       },
     })
+    let link: string
+    try {
+      const dl = await axios.get(decodedUser.profile_deep_link)
+      link = dl.request.path
+    } catch (err) {
+      link = err.response.request.path
+    }
+    const username = new URL('https://a.com' + link).pathname.replace(/\//gm, '')
     return {
       id:
         (decodedUser as TikTokTokenDecoded).open_id || (decodedUser as TikTokTokenDecoded).union_id,
       avatarUrl: (decodedUser as TikTokTokenDecoded).avatar_url,
       original: decodedUser,
       nickName: (decodedUser as TikTokTokenDecoded).display_name,
-      name: (decodedUser as TikTokTokenDecoded).display_name,
+      name: username,
       email: null,
       emailVerificationState: 'unverified',
     }
