@@ -19,7 +19,7 @@ import type {
   RedirectRequestContract
 } from '@ioc:Adonis/Addons/Ally'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { URL } from 'url'
 
 /**
@@ -183,7 +183,7 @@ export class TikTokDriver extends Oauth2Driver<TikTokDriverAccessToken, TikTokDr
       const dl = await axios.get(decodedUser.profile_deep_link)
       link = dl.request.path
     } catch (err) {
-      link = err.response.request.path
+      link = (err as AxiosError).request?.path
     }
     const username = new URL('https://a.com' + link).pathname.replace(/\//gm, '')
     return {
