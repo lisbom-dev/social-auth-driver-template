@@ -39,7 +39,7 @@ const allyConfig: AllyConfig = {
     driver: 'tiktok',
     clientId: Env.get('TIKTOK_DRIVER_CLIENT_ID'),
     clientSecret: Env.get('TIKTOK_DRIVER_CLIENT_SECRET'),
-    callbackUrl: 'https://cd86-45-164-53-18.sa.ngrok.io/auth/tiktok/callback',
+    callbackUrl: 'https://8ead-45-164-53-26.sa.ngrok.io/auth/tiktok/callback',
     scopes: ['user.info.basic'],
   },
 }

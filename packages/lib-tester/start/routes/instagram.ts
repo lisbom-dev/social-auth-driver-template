@@ -29,6 +29,7 @@ Route.get('/auth/:provider/callback', async ({ ally, params, auth, response }) =
   }
 
   const instagramUser = await instagram.user()
+  console.log(instagramUser)
   const user = await User.firstOrCreate({
     email: instagramUser.email!,
   })
